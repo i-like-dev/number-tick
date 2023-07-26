@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>數字選號器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .selected {
+            background-color: #f00;
+            color: #fff;
+        }
+
+        .custom-input {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>數字選號器</h1>
+    <table>
+        <tr>
+            <td data-number="1">1</td>
+            <td data-number="2">2</td>
+            <td data-number="3">3</td>
+            <td data-number="4">4</td>
+            <td data-number="5">5</td>
+        </tr>
+        <tr>
+            <td data-number="6">6</td>
+            <td data-number="7">7</td>
+            <td data-number="8">8</td>
+            <td data-number="9">9</td>
+            <td data-number="0">0</td>
+        </tr>
+    </table>
+    <div class="custom-input">
+        <label for="customNumber">自訂數字：</label>
+        <input type="number" id="customNumber" min="0" max="9">
+        <button onclick="addCustomNumber()">新增</button>
+    </div>
+
+    <script>
+        function addCustomNumber() {
+            const input = document.getElementById('customNumber');
+            const customNumber = parseInt(input.value);
+            
+            if (isNaN(customNumber) || customNumber < 0 || customNumber > 9) {
+                alert('請輸入有效數字（0 到 9 之間的整數）！');
+                return;
+            }
+            
+            const table = document.querySelector('table');
+            const row = table.insertRow(-1);
+            const cell = row.insertCell(0);
+            cell.textContent = customNumber;
+            cell.setAttribute('data-number', customNumber);
+            cell.addEventListener('click', toggleSelected);
+            
+            input.value = '';
+        }
+
+        function toggleSelected(event) {
+            const cell = event.target;
+            cell.classList.toggle('selected');
+        }
+    </script>
+</body>
+</html>
